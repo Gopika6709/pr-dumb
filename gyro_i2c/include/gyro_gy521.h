@@ -18,7 +18,6 @@ struct i2c_bus_details {
 		.scl.port = c_port				\
 	}							
 
-
 char i2c_bus_configure(const struct i2c_bus_details *i2c_bus_details);
 #endif
 
@@ -29,9 +28,9 @@ enum axis {
 	XYZ_AXIS
 };
 
-char gy_init( unsigned char ad0_state, unsigned char bus);
-char gyroscope_read(enum axis axis, short *receive_buffer, unsigned char bus);
-char accelerometer_read(enum axis axis, short  *receive_buffer, unsigned char bus);
-char temperature_read(float *temperature_buffer, unsigned char bus);
+char gy_init(unsigned char ad0_state, void *bus);
+char gyroscope_read(enum axis axis, short *receive_buffer, void *bus);
+char accelerometer_read(enum axis axis, short  *receive_buffer, void *bus);
+char temperature_read(float *temperature_buffer, void *bus);
 
 #endif

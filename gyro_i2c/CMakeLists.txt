@@ -12,3 +12,4 @@ target_sources(app PRIVATE
 		src/gyro.c
 		src/i2c.c)
 
+

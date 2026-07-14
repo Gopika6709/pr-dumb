@@ -10,24 +10,16 @@
 int main(void)
 {
 	/* I2C bus configuration details */
-	struct i2c_bus_details bus;
-	bus.sda.pin = SDA_PIN;
-	bus.sda.port = PORT_A;
-	bus.scl.pin = SCL_PIN;
-	bus.scl.port = PORT_A;
-
+	BUS_CONFIGURE(bus0, SDA_PIN, PORT_A, SCL_PIN, PORT_A);
 	unsigned char ret;
-	/* configure bus for i2c */
-	char bus_n = i2c_bus_configure(&bus);
-	printf("bus %d \n", bus_n);
-	bus_n = i2c_bus_configure(&bus);
-	printf("bus %d \n", bus_n);
-	ret = gy_init(bus_n, AD0_LOW);
 	float degree = 0;
+	short gyro_x[3] = {0};
+	void * bus_n = i2c_bus_configure(&bus0);
+	
+	ret = gy_init(AD0_LOW, bus_n);
 	ret = temperature_read(&degree, bus_n);
 	printf("temp : %d \n", (short)degree);
 
-	short gyro_x[3] = {0};
 	while (1) {
 		accelerometer_read(XYZ_AXIS, &gyro_x[0], bus_n);
 		printf("===================\n");
