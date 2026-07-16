@@ -14,7 +14,7 @@ char i2c_bus_configure(struct i2c_bus_details* bus)
 	static unsigned char configured_bus_ct = 0;
 	struct i2c_bus_details* temp_bus_ptr = realloc(configured_bus_details, 
 					       (configured_bus_ct + 1) * sizeof(struct i2c_bus_details));
-	if (temp_bus_ptr == NULL)
+	if (!temp_bus_ptr)
 		return -FAILURE;
 
 	temp_bus_ptr[configured_bus_ct] = *bus;
