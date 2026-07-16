@@ -2,12 +2,24 @@
 #define STM32_HEADER_H
 
 #define GPIO_BASE (0x40020000) 
-#define PORT_OFFSET(x) ((volatile struct gpio*)(GPIO_BASE + (0x400 * x)))
+#define PORT_OFFSET(x) ((volatile struct gpio_reg*)(GPIO_BASE + (0x400 * (x))))
 #include <zephyr/kernel.h>
 
-struct gpio{
+#define INPUT_MODE 0
+#define OUTPUT_MODE 1
+
+#define HIGH 1
+#define LOW 0
+
+#define PULL_UP 1
+#define PULL_DOWN 2
+
+#define OPEN_DRAIN 1
+
+
+struct gpio_reg{
 	unsigned int mode_register;
-	unsigned int type_register;
+	unsigned int output_type_register;
 	unsigned int speed_register;
 	unsigned int pullup_pulldown_register;
 	unsigned int input_data_register;
@@ -26,30 +38,17 @@ enum {
         PORT_H
 };
 
-void output_enable(unsigned char, unsigned char);
 
-void output_high(unsigned char, unsigned char);
+void gpio_pin_mode(unsigned char pin, unsigned char port, unsigned char mode);
 
-void output_low(unsigned char, unsigned char);
+void gpio_pin_output_type(unsigned char pin, unsigned char port, unsigned char state);
 
-unsigned char output_read(unsigned char, unsigned char);
+void gpio_pin_write(unsigned char pin, unsigned char port, unsigned char data); //writes odr
 
-void output_write(unsigned char, unsigned char, unsigned char);
+unsigned char gpio_pin_read(unsigned char pin, unsigned char port); //reads idr
 
-void output_toggle(unsigned char, unsigned char);
+void gpio_pin_toggle(unsigned char pin, unsigned char port); //toggle odr
 
-void send_byte(unsigned char, unsigned char, unsigned char); //sends 8 bits 
-	
-void input_enable(unsigned char, unsigned char);
-
-unsigned char input_read(unsigned char, unsigned char);
-
-void input_high(unsigned char, unsigned char);
-
-void pullup_enable(unsigned char, unsigned char);
-
-void pulldown_enable(unsigned char, unsigned char);
-
-void open_drain_enable(unsigned char, unsigned char);
+void gpio_pupdr_config(unsigned char pin, unsigned char port, unsigned char up_down);
 
 #endif
