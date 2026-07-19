@@ -4,12 +4,6 @@
 #include "stm32_header.h"
 #include <stdlib.h>
 
-#define I2C_WRITE 0
-#define I2C_READ 1
-
-#define ACK 0
-#define NACK 1
-
 #define RETURN_SUCCESS 0
 #define FAILURE 1	 
 #define INV_ARG 2
@@ -37,13 +31,13 @@ struct i2c_transfer_details {
 struct i2c_target_details {
 	unsigned char target_address;
 	unsigned char mode; /* standard mode - 100khz */
-	unsigned char bus_id;
+	void *i2c_bus;
 };
 
-char i2c_bus_configure(struct i2c_bus_details *i2c_bus_details);
+void *i2c_bus_configure(struct i2c_bus_details *i2c_bus_details);
 
-unsigned char i2c_transfer(struct i2c_target_details   *i2c_target_details, 
-			   struct i2c_transfer_details *i2c_read_details, 
-			   struct i2c_transfer_details *i2c_write_details);
+char i2c_transfer(struct i2c_target_details   *i2c_target_details, 
+			   struct i2c_transfer_details *i2c_write_details,
+			   struct i2c_transfer_details *i2c_read_details);
 
 #endif
