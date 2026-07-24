@@ -1,5 +1,6 @@
 #include "i2c.h"
 #include "stm32_header.h"
+#include <zephyr/kernel.h>
 
 #define I2C_WRITE 0
 #define I2C_READ 1
@@ -149,7 +150,7 @@ char i2c_transfer(struct i2c_target_details   *i2c_target,
 		return -INV_ARG;
 	
 	delay = ((1.0 / (2 * KHZ(i2c_target->mode))) * 1000000);	// Clock time period
-	flag = -INV_ARG; 
+	flag = 0; 
 	bus = i2c_target->i2c_bus;
 
 	start_condition(bus, delay);

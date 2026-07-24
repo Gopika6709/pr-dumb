@@ -3,7 +3,6 @@
 
 #define GPIO_BASE (0x40020000) 
 #define PORT_OFFSET(x) ((volatile struct gpio_reg*)(GPIO_BASE + (0x400 * (x))))
-#include <zephyr/kernel.h>
 
 #define INPUT_MODE 0
 #define OUTPUT_MODE 1
@@ -11,9 +10,11 @@
 #define HIGH 1
 #define LOW 0
 
+#define NO_PULLUP_PULLDOWN 0
 #define PULL_UP 1
 #define PULL_DOWN 2
 
+#define PUSH_PULL 0
 #define OPEN_DRAIN 1
 
 
